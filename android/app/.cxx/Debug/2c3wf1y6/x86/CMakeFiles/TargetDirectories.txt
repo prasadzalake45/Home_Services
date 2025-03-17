@@ -1,0 +1,2 @@
+C:/Users/Siddhatech/Downloads/home_hub-master (1) 1/home_hub-master/android/app/.cxx/Debug/2c3wf1y6/x86/CMakeFiles/edit_cache.dir
+C:/Users/Siddhatech/Downloads/home_hub-master (1) 1/home_hub-master/android/app/.cxx/Debug/2c3wf1y6/x86/CMakeFiles/rebuild_cache.dir

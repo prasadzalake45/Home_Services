@@ -1,0 +1,101 @@
+[
+  {
+    "serviceName": "Plumbers",
+    "imagePath": "assets/images/plumber.jpg",
+    "isSelected": false,
+    "subcategories": [
+      {"name": "Pipe Installation & Repair"},
+    {"name": "Drain Cleaning & Unclogging"},
+    {"name": "Leak Detection & Fixing"},
+    {"name": "Bathroom & Kitchen Fittings"},
+    {"name": "Water Tank Cleaning"},
+    {"name": "Sewage & Sump Pump Repair"},
+    {"name": "Gas Line Installation & Repair"}
+    ]
+  },
+  {
+    "serviceName": "Electricians",
+    "imagePath": "assets/images/electrician.jpg",
+    "isSelected": false,
+    "subcategories": [
+      {"name": "Wiring & Rewiring"},
+      {"name": "Switchboard & Socket Repair"},
+      {"name": "Fan & Light Installation"},
+      {"name": "Inverter & UPS Installation"},
+      {"name": "Circuit Breaker & Fuse Repair"},
+      {"name": "Appliance Wiring (AC, Geyser, etc.)"},
+      {"name": "Home Automation & Smart Devices"}
+    ]
+  },
+  {
+    "serviceName": "Painters",
+    "imagePath": "assets/images/painter.jpg",
+    "isSelected": false,
+    "subcategories": [
+      {"name": "Interior Wall Painting"},
+      {"name": "Exterior House Painting"},
+      {"name": "Waterproofing & Damp Proofing"},
+      {"name": "Texture & Decorative Painting"},
+      {"name": "Metal & Wood Painting"},
+      {"name": "Spray Painting"},
+      {"name": "Wall Stencil & Design Work"}
+    ]
+  },
+  {
+    "serviceName": "Carpenters",
+    "imagePath": "assets/images/carpenter.jpg",
+    "isSelected": false,
+    "subcategories": [
+      {"name": "Furniture Repair & Assembly"},
+      {"name": "Custom Furniture Making"},
+      {"name": "Wooden Door & Window Installation"},
+      {"name": "Modular Kitchen Installation"},
+      {"name": "Wardrobe & Cabinet Making"},
+      {"name": "Wood Polishing & Varnishing"},
+      {"name": "False Ceiling & Partition Work"}
+    ]
+  },
+  {
+    "serviceName": "Home Cleaning",
+    "imagePath": "assets/images/home_cleaner.jpg",
+    "isSelected": false,
+    "subcategories": [
+      {"name": "Wall Crack & Patch Repair"},
+      {"name": "Floor & Tile Repair"},
+      {"name": "Door & Window Repair"},
+      {"name": "Water Leakage Fixing"},
+      {"name": "Roof & Ceiling Repair"},
+      {"name": "Masonry & Concrete Work"},
+      {"name": "General Handyman Services"}
+    ]
+  },
+  {
+    "serviceName": "Car Washers",
+    "imagePath": "assets/images/painter1.jpg",
+    "isSelected": false,
+    "subcategories": [
+      {"name": "Exterior Car Wash"},
+      {"name": "Interior Vacuum & Cleaning"},
+      {"name": "Engine Bay Cleaning"},
+      {"name": "Waxing & Polishing"},
+      {"name": "Ceramic Coating"},
+      {"name": "Upholstery & Seat Cleaning"},
+      {"name": "Mobile Car Wash Service"}
+    ]
+  },
+  {
+    "serviceName": "Car Repairing",
+    "imagePath": "assets/images/electrician.jpg",
+    "isSelected": false,
+    "subcategories": [
+      {"name": "Exterior Car Wash"},
+      {"name": "Interior Vacuum & Cleaning"},
+      {"name": "Engine Bay Cleaning"},
+      {"name": "Waxing & Polishing"},
+      {"name": "Ceramic Coating"},
+      {"name": "Upholstery & Seat Cleaning"},
+      {"name": "Mobile Car Wash Service"}
+  
+    ]
+  }
+]
