@@ -95,7 +95,7 @@ class CustomBottomNav extends StatelessWidget {
 //             child: Text('Yes'),
 //             onPressed: () {
 //               againBooking(index!);
-//               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashBoardScreen()), (route) => false);
+//               Navigator.pushReplacementAndRemoveUntil(context, MaterialPageRoute(builder: (context) => DashBoardScreen()), (route) => false);
 //             },
 //           ),
 //         ],

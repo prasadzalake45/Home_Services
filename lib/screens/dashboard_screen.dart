@@ -108,7 +108,7 @@ final List<CommonModel> homeServices = [
           IconButton(
             icon: Icon(Icons.notifications, color: Colors.black),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
             },
           ),
         ],
@@ -166,7 +166,7 @@ final List<CommonModel> homeServices = [
               Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ServiceScreen()));
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ServiceScreen()));
                 },
                 child: Text("View All", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.blue)),
               ),
@@ -183,7 +183,7 @@ final List<CommonModel> homeServices = [
 
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ServiceDetailsScreen(service: ServicesModel(serviceName: item.title, imagePath: "", serviceImage: "", subcategories: [])),
@@ -227,7 +227,7 @@ Widget _buildHomeConstructionSection() {
             Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => ServiceScreen()),
                 );
@@ -247,11 +247,11 @@ Widget _buildHomeConstructionSection() {
 
             return GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ServiceDetailsScreen(
-                      service: ServicesModel(serviceName: item.title, serviceImage: item.imagePath ?? "", subcategories: []),
+                      service: ServicesModel(serviceName: item.title, serviceImage: item.imagePath ?? "", subcategories: [], imagePath: ''),
                     ),
                   ),
                 );

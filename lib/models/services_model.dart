@@ -11,7 +11,8 @@ class ServicesModel {
     required this.serviceName,
     required this.serviceImage,
     required this.subcategories,
-    this.isSelected = false,
+    this.isSelected = false, 
+    required String imagePath,
   });
 
   factory ServicesModel.fromJson(Map<String, dynamic> json) {
@@ -22,25 +23,30 @@ class ServicesModel {
       serviceName: json['serviceName'],
       serviceImage: json['imagePath'],
       subcategories: subcategoryList,
-      isSelected: json['isSelected'] ?? false,
+      isSelected: json['isSelected'] ?? false, 
+      imagePath: '',
     );
   }
 }
 
 class Subcategory {
   String name;
+ 
 
-  Subcategory(this.name);
+  Subcategory(this.name );
 
   factory Subcategory.fromJson(Map<String, dynamic> json) {
     return Subcategory(
       json['name'],
+    
+    
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
+      
     };
   }
 }

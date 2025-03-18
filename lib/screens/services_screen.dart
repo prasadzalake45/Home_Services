@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' as rootBundle;
+import 'package:home_services/components/services_widget.dart';
 import '../models/services_model.dart';
 import 'subcategories_screen.dart'; // Import the new screen
-import '../utils/widgets.dart';
-import '../fragments/account_fragment.dart';
-import 'dashboard_screen.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' as rootBundle;
 
 class ServiceScreen extends StatefulWidget {
   @override
@@ -15,22 +13,26 @@ class ServiceScreen extends StatefulWidget {
 class _ServiceScreenState extends State<ServiceScreen> {
   List<ServicesModel> services = [];
   List<ServicesModel> filteredServices = [];
-  int _selectedIndex = 1; // Default index for Services
+   final FocusNode _focusNode=FocusNode();
 
   @override
   void initState() {
     super.initState();
     loadServices();
+      Future.delayed(Duration(milliseconds: 300),(){
+      _focusNode.requestFocus();
+
+    });
   }
 
   Future<void> loadServices() async {
     final String response = await rootBundle.rootBundle.loadString('assets/services_list.json');
     final List<dynamic> data = json.decode(response);
-
     setState(() {
       services = data.map((e) => ServicesModel.fromJson(e)).toList();
       filteredServices = services;
     });
+    print('Services loaded: ${services.length}');
   }
 
   void filterSearch(String query) {
@@ -39,158 +41,74 @@ class _ServiceScreenState extends State<ServiceScreen> {
           .where((service) => service.serviceName.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
+    print('Filtered services: ${filteredServices.length}');
   }
 
-  void _onItemTapped(int index) {
-    switch (index) {
-      case 0: // Home → Redirect to Dashboard
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
-        break;
-      case 1: // Bookings → Show Alert
-      case 2: // Chats → Show Alert
-        _showComingSoonDialog();
-        break;
-      case 3: // Profile → Open Account Fragment
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AccountFragment()),
-        );
-        break;
-    }
+  void sortServices(){
+    setState(() {
+      filteredServices.sort((a,b)=>a.serviceName.compareTo(b.serviceName));
+    });
   }
 
-  void _showComingSoonDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Coming Soon"),
-        content: Text("This feature will be available in future updates."),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("OK"),
-          )
-        ],
-      ),
-    );
-  }
+   void dispose(){
+    _focusNode.dispose();
+    super.dispose()
+;  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: AppBar(
+          title: Text(
+            "Services",
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back)),
+          actions: [
+            IconButton(
+              onPressed: sortServices,
+              icon: Icon(Icons.sort_by_alpha),
+            )
+          ],
+        ),
+
       body: Column(
         children: [
-          // App Bar with Search Bar
-          Container(
-            color: Theme.of(context).appBarTheme.backgroundColor,
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: Column(
-              children: [
-                AppBar(
-                  title: Text(
-                    "Services",
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  actions: [
-                    IconButton(
-                      icon: Icon(Icons.sort_by_alpha),
-                      onPressed: () {
-                        setState(() {
-                          filteredServices.sort((a, b) => a.serviceName.compareTo(b.serviceName));
-                        });
-                      },
-                    ),
-                  ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: TextField(
+              focusNode: _focusNode,
+              onChanged: filterSearch,
+              decoration: InputDecoration(
+                hintText: "Search Services...",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: TextField(
-                    onChanged: filterSearch,
-                    decoration: InputDecoration(
-                      hintText: "Search Services...",
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-
-          // Scrollable ListView (Services List)
           Expanded(
-            child: filteredServices.isEmpty
-                ? Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemCount: filteredServices.length,
-                    itemBuilder: (context, index) {
-                      final service = filteredServices[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SubcategoriesScreen(service: service),
-                            ),
-                          );
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Card(
-                            elevation: 1,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  // Left Side - Image
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      service.serviceImage,
-                                      width: 80,
-                                      height: 80,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  SizedBox(width: 16), // Space between image and text
-
-                                  // Right Side - Text Details
-                                  Expanded(
-                                    child: Text(
-                                      service.serviceName,
-                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
+            child: ServiceWidget(
+              items: filteredServices,
+              getItemName: (item) => item.serviceName,
+              getItemImage: (item) => item.serviceImage,
+              onItemTap: (item) => () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SubcategoriesScreen(service: item),
                   ),
+                );
+              },
+            ),
           ),
         ],
-      ),
-      bottomNavigationBar: CustomBottomNav(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
       ),
     );
   }
