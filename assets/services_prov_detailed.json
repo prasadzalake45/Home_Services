@@ -1,0 +1,22 @@
+
+[
+
+    {
+      
+        "id": 1,
+        "name": "Michel Smith",
+        "providerImage": "assets/images/painter.jpg",
+        "email": "michel.smith@example.com",
+       
+        "reviews": 120,
+        "discount": "10% off on first service",
+        "bio": "Experienced plumber with over 10 years of experience in residential and commercial plumbing.",
+        "subcategories": ["Plumbing", "Repair"],
+        "locations": ["Sangamner", "South Africa"],
+        "photos": ["assets/images/banner.jpg", "assets/images/banner1.jpg"],
+        "videos": ["assets/videos/video1.mp4"],
+        "isLiked": false
+
+    }
+   
+]
