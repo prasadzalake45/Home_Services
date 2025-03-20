@@ -24,7 +24,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       itemCount: widget.items.length,
       itemBuilder: (context, index) {
         final item = widget.items[index];
+      
         return GestureDetector(
+        
           onTap: widget.onItemTap(item),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),

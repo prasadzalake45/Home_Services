@@ -9,6 +9,10 @@ import '../fragments/account_fragment.dart';
 import 'dashboard_screen.dart';
 import '../models/services_list.dart';
 import '../models/services_model.dart'; // Import the ServicesModel class
+import 'package:flutter_mobx/flutter_mobx.dart';
+import '../store/service_provider_store.dart';
+
+
 
 class ServiceDetailsScreen extends StatefulWidget {
   final ServicesModel service;
@@ -20,8 +24,9 @@ class ServiceDetailsScreen extends StatefulWidget {
 }
 
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
-  List<ServicesDetails> servicesDetails = [];
-  List<ServicesDetails> filteredServices = [];
+  // List<ServicesDetails> servicesDetails = [];
+  // List<ServicesDetails> filteredServices = [];
+  final ServiceProviderStore serviceProviderStore=ServiceProviderStore();
   final FocusNode _focusNode=FocusNode();
   int _selectedIndex = 1; // Default index for Services
   
@@ -34,31 +39,16 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    loadServices();
+
+    serviceProviderStore.  loadServiceProviders();
       Future.delayed(Duration(milliseconds: 300),(){
       _focusNode.requestFocus();
 
     });
   }
 
-  Future<void> loadServices() async {
-    final String response =
-        await rootBundle.rootBundle.loadString('assets/serviceProviderDetails.json');
-    final List<dynamic> data = json.decode(response);
-    setState(() {
-      servicesDetails = data.map((e) => ServicesDetails.fromJson(e)).toList();
-      filteredServices = servicesDetails;
-    });
-  }
 
-  void filterSearch(String query) {
-    setState(() {
-      filteredServices = servicesDetails
-          .where((service) =>
-              service.serviceName.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    });
-  }
+
 
 
    void dispose(){
@@ -104,98 +94,91 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(
-          context, 
-          MaterialPageRoute(
-            builder: (context)=>ServiceProviderDetailScreen(providerId: 0,),
-          )
-          );
-      },
-      child: Scaffold(
-        body: Column(
-          children: [
-            // AppBar with search bar
-            Container(
-              color: Theme.of(context).appBarTheme.backgroundColor,
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: Column(
-                children: [
-                  AppBar(
-                    title: Text(
-                      "Service Providers",
-                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
-                    ),
-                    centerTitle: true,
-                    leading: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    actions: [
-                      IconButton(
-                        icon: Icon(Icons.sort_by_alpha),
-                        onPressed: () {
-                          setState(() {
-                            filteredServices.sort(
-                                (a, b) => a.providerName.compareTo(b.providerName));
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: TextField(
-                      onChanged: filterSearch,
-                      focusNode: _focusNode,
-                      
-                      decoration: InputDecoration(
-                      
-                        hintText: "Search Service Provider ...",
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Column(
+      children: [
+        // AppBar with search bar
+        Container(
+          color: Theme.of(context).appBarTheme.backgroundColor,
+          child: Column(
+            children: [
+              AppBar(
+                title: Text(
+                  "Service Providers",
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+                ),
+                centerTitle: true,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.sort_by_alpha),
+                    onPressed:serviceProviderStore.sortServiceProviders ,
+                  )
                 ],
               ),
-            ),
-      
-            // Scrollable ListView
-            Expanded(
-              child: filteredServices.isEmpty
-                  ? Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      itemCount: filteredServices.length,
-                      itemBuilder: (context, index) {
-                        final service = filteredServices[index];
-                        return ServiceProviderCard(
-                          imagePath: service.imagePath, 
-                          providerName: service.providerName, 
-                          serviceName: service.serviceName, 
-                          rating: service.rating,
-                        );
-                          
-                          
-                      },
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: TextField(
+                  onChanged:serviceProviderStore. filterSearch,
+                  focusNode: _focusNode,
+                  decoration: InputDecoration(
+                    hintText: "Search Service Provider ...",
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-            ),
-          ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        bottomNavigationBar: CustomBottomNav(
-          selectedIndex: _selectedIndex,
-          onItemTapped: _onItemTapped,
-        ),
-      ),
-    );
-  }
-}
 
-class ServiceProviderDetailsScreen {
+        // Scrollable ListView
+        Expanded(
+          child:Observer(builder: (_)=>
+          
+          serviceProviderStore. filteredServiceProviders.isEmpty
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: serviceProviderStore. filteredServiceProviders.length,
+                  itemBuilder: (context, index) {
+                    final service = serviceProviderStore. filteredServiceProviders[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ServiceProviderDetailScreen(
+                              providerId: 0, // Pass the correct providerId
+                            ),
+                          ),
+                        );
+                      },
+                      child: ServiceProviderCard(
+                        imagePath: service.imagePath,
+                        providerName: service.providerName,
+                        serviceName: service.serviceName,
+                        rating: service.rating,
+                      ),
+                    );
+                  },
+                ),
+        ),
+        )
+      ],
+    ),
+    bottomNavigationBar: CustomBottomNav(
+      selectedIndex: _selectedIndex,
+      onItemTapped: _onItemTapped,
+    ),
+  );
+}
 }

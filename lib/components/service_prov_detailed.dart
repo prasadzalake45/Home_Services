@@ -25,7 +25,7 @@ class ServiceProviderDetailsWidget extends StatelessWidget {
                   if (serviceProvider.discount != null) _buildDiscount(),
                   SizedBox(height: 16),
                   if (serviceProvider.subcategories?.isNotEmpty ?? false)
-                    _buildInfoTile("Subcategories", serviceProvider.subcategories!.join(', ')),
+                    _buildInfoTile("Services", serviceProvider.subcategories!.join(', ')),
                   if (serviceProvider.locations?.isNotEmpty ?? false)
                     _buildInfoTile("Locations", serviceProvider.locations!.join(', ')),
                   SizedBox(height: 16),
@@ -190,12 +190,12 @@ class ServiceProviderDetailsWidget extends StatelessWidget {
           icon: Icon(Icons.share),
           label: Text("Share"),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.blue,
-            side: BorderSide(color: Colors.blue),
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
+           
           ),
         ),
         ElevatedButton.icon(
@@ -203,12 +203,13 @@ class ServiceProviderDetailsWidget extends StatelessWidget {
           icon: Icon(Icons.chat),
           label: Text("Chat"),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.blue,
-            side: BorderSide(color: Colors.blue),
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+           
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
+            
           ),
         ),
       ],

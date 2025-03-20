@@ -2,8 +2,8 @@ class ServiceProviderDetails {
   final int id;
   final String name;
   final String providerImage;
-  final String? email; // Nullable
-  final int? reviews; // Nullable
+  final String email;
+  final int reviews; 
   final String? discount; // Nullable
   final String? bio; // Nullable
   final List<String>? subcategories; // Nullable
@@ -16,8 +16,8 @@ class ServiceProviderDetails {
     required this.id,
     required this.name,
     required this.providerImage,
-    this.email,
-    this.reviews,
+    required this.email,
+    required this.reviews,
     this.discount,
     this.bio,
     this.subcategories,
@@ -32,8 +32,8 @@ class ServiceProviderDetails {
       id: json['id'],
       name: json['name'],
       providerImage: json['providerImage'],
-      email: json['email'], // Nullable
-      reviews: json['reviews'], // Nullable
+      email: json['email'],
+      reviews: json['reviews'], 
       discount: json['discount'], // Nullable
       bio: json['bio'], // Nullable
       subcategories: json['subcategories'] != null

@@ -1,5 +1,6 @@
 [
-    {
+    { 
+      
       "serviceName": "Plumbers",       
       "imagePath": "assets/images/plumber.jpg",
       "providerName":"Michel smith",
@@ -7,6 +8,7 @@
       "charge":"Rs 330/hr"
     },
     {
+      
       "serviceName": "Home clean",       
       "imagePath": "assets/images/home_cleaner.jpg",
       "providerName":"Michel John",

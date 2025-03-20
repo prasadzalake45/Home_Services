@@ -32,14 +32,14 @@ class _ServiceProviderCardState extends State<ServiceProviderCard>{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: Card(
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
         child: Container(
-          height: 200,
+          height: 150,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.grey[200],
